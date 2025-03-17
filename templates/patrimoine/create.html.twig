@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un patrimoine{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un patrimoine</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.details) }}
+        {{ form_row(form.typeBien) }}
+        {{ form_row(form.dateAcquisition) }}
+        {{ form_row(form.montant) }}
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    {{ form_end(form
+    ) }}
+
+    <a href="{{ path('patrimoine.index') }}">Retour à la liste</a>
+
+{% endblock %}

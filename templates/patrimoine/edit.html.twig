@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un patrimoine{% endblock %}
+
+{% block body %}
+    <h1>Modifier un patrimoine</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.details) }}
+        {{ form_row(form.typeBien) }}
+        {{ form_row(form.dateAcquisition) }}
+        {{ form_row(form.montant) }}
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('patrimoine.index') }}">Retour à la liste</a>
+
+{% endblock %}

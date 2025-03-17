@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AmortissementController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Voici le détail du crédit {{ credit.id }}</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Mois</th>
+                <th scope="col">Date</th>
+                <th scope="col">Annuité</th>
+                <th scope="col">Intérêts</th>
+                <th scope="col">Capital</th>
+                <th scope="col">Capital restant dû</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for amortissement in amortissements %}
+                <tr>
+                    <td>{{ amortissement.mois }}</td>
+                    <td>{{ amortissement.date|date('d/m/Y') }}</td>
+                    <td>{{ amortissement.mensualite|round(2,'common') }} €</td>
+                    <td>{{ amortissement.interet|round(2,'common') }} €</td>
+                    <td>{{ amortissement.capital|round(2,'common') }} €</td>
+                    <td>{{ amortissement.capitalRestant|round(2,'common') }} €</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href = "{{ path('credit.index') }}"> <button type="button" class="btn btn-secondary">Retour</button></a>
+    <a href = "{{ path('amortissement.create', {id: credit.id}) }}"><button type="submit" class="btn btn-success">Valider le plan d'amortissement</button></a>
+    <button type="submit" class="btn btn-warning">Modifier le plan d'amortissement</button>
+    <button type="button" class="btn btn-danger">Supprimer le plan d'amortissement</button>
+</div>
+{% endblock %}

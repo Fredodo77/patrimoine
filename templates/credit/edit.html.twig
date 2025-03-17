@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CreditController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 1200px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+
+    <h1>Bienvenue dans la modification d'un crédit</h1>
+
+    <table class="table">
+
+        <thead>
+
+            <tr>
+                <th scope="col">Taux (en %)</th>
+                <th scope="col">Assurance (en €)</th>
+                <th scope="col">Date de première échéance</th>
+                <th scope="col">Montant (en €)</th>
+                <th scope="col">Durée (en mois)</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                {{ form_start(form) }}
+                <td>{{ form_row(form.taux) }}</td>
+                <td>{{ form_row(form.assurance) }}</td>
+                <td>{{ form_row(form.premiere_echeance) }}</td>
+                <td>{{ form_row(form.montant) }}</td>
+                <td>{{ form_row(form.duree) }}</td>
+                <td><button type="submit" class="btn btn-primary">Modifier</button></td>
+                {{ form_end(form) }}
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

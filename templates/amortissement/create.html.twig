@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un amortissement{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un amortissement</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Mois</th>
+                <th scope="col">Date</th>
+                <th scope="col">Annuité</th>
+                <th scope="col">Intérêts</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for amortissement in amortissements %}
+                <tr>
+                    <td>{{ amortissement.mois }}</td>
+                    <td>{{ amortissement.date|date('d/m/Y') }}</td>
+                    <td>{{ amortissement.mensualite|round(2,'common') }} €</td>
+                    <td>{{ amortissement.interet|round(2,'common') }} €</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                {{ form_start(form) }}
+                <td>    {{ form_row(form.num_echeance) }}</td>
+                <td>    {{ form_row(form.date_echeance) }}</td>
+                <td>    {{ form_row(form.montant_amortissement) }}</td>
+                <td>    {{ form_row(form.montant_interet) }}</td>
+                <td>    <button type="submit" class="btn btn-primary">Ajouter</button></td>
+                {{ form_end(form) }}
+            </tr>
+            
+        </tbody>
+
+    </table>
+
+    <a href="{{ path('credit.index') }}">Retour à la liste</a>
+
+{% endblock %}

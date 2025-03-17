@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PatrimoineController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 1200px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Bienvenue dans la gestion de votre patrimoine !</h1>
+    {% set total = 0 %}
+    <select name="patrimoine" id="patrimoine">
+    {% for patrimoines in patrimoine %}
+        {% set total = total + patrimoines.montant %}
+        
+           <option value="{% set bien = patrimoines.typeBien %}">{{ patrimoines.typeBien }}</option>
+            
+    {% endfor %}
+    </select><br>
+    Le montant total de votre patrimoine est de {{ total }} €<br>
+    Voici votre patrimoine : <br>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Détails</th>
+                <th scope="col">Type de bien</th>
+                <th scope="col">Date d'acquisition</th>
+                <th scope="col">Valeur</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for patrimoines in patrimoine %}
+                <tr>
+                    <td>{{ patrimoines.name }}</td>
+                    <td>{{ patrimoines.details }}</td>
+                    <td>{{ patrimoines.typeBien }}</td>
+                    <td>{{ patrimoines.dateAcquisition|date('d/m/Y') }}</td>
+                    <td>{{ patrimoines.montant }} {% if patrimoines.montant>0 %} € {% endif %}</td>
+                    <td>
+                        <a href="{{ path('patrimoine.edit', {'id': patrimoines.id}) }}" class="btn btn-primary">Modifier</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('patrimoine.delete', {'id': patrimoines.id}) }}" class="btn btn-danger">Supprimer</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Pas de patrimoine trouvé.</td>
+                </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+    <a href="{{ path('patrimoine.create') }}" class="btn btn-success">Ajouter un patrimoine</a>
+</div>
+{% endblock %}
