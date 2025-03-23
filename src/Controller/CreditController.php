@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Service\AmortissementService;
 
 final class CreditController extends AbstractController
 {
@@ -47,17 +48,24 @@ final class CreditController extends AbstractController
         ]);
     }
     #[Route('/credit/create', name: 'credit.create', methods: ['GET', 'POST'])]
-    public function create(Request $request, EntityManagerInterface $entityManager): Response
+    public function create(Request $request, EntityManagerInterface $entityManager, AmortissementService $amortissementService): Response
     {
         $credit = new Credit();
         $form = $this->createForm(CreditType::class, $credit);
         $form->handleRequest($request);
+        
         if ($form->isSubmitted() && $form->isValid()) {
+            
            // try {
             $credit = $form->getData();
             $entityManager->persist($credit);
             // Gérer l'amortissement ici
             $entityManager->flush();
+            
+            $amortissementService->createAmortissement($credit->getId());
+
+            
+
            // } catch (Exception $exception) {
              //   $entityManager->rollback();
                // $this->logger->error("L'ajout de l'amortissement a échoué");
