@@ -23,11 +23,12 @@ class Patrimoine
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateAcquisition = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $typeBien = null;
-
     #[ORM\Column(type: Types::DECIMAL, precision: 15, scale: 2, nullable: true)]
     private ?string $montant = null;
+
+    #[ORM\ManyToOne(inversedBy: 'nom_type_patrimoine')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TypePatrimoine $typePatrimoine = null;
 
     public function getId(): ?int
     {
@@ -70,18 +71,6 @@ class Patrimoine
         return $this;
     }
 
-    public function getTypeBien(): ?string
-    {
-        return $this->typeBien;
-    }
-
-    public function setTypeBien(string $typeBien): static
-    {
-        $this->typeBien = $typeBien;
-
-        return $this;
-    }
-
     public function getMontant(): ?string
     {
         return $this->montant;
@@ -90,6 +79,18 @@ class Patrimoine
     public function setMontant(?string $montant): static
     {
         $this->montant = $montant;
+
+        return $this;
+    }
+
+    public function getTypePatrimoine(): ?TypePatrimoine
+    {
+        return $this->typePatrimoine;
+    }
+
+    public function setTypePatrimoine(?TypePatrimoine $typePatrimoine): static
+    {
+        $this->typePatrimoine = $typePatrimoine;
 
         return $this;
     }

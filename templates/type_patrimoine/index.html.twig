@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TypePatrimoineController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Types de bien</h1>
+
+   Voici les types de patrimoine existant :
+   
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for typePatrimoines in typePatrimoine %}
+                <tr>
+                    <td>{{ typePatrimoines.id }}</td>
+                    <td>{{ typePatrimoines.name }}</td>
+                    <td>
+                    <!--    <a href="#" class="btn btn-primary">Voir</a> -->
+                        <a href="{{ path('typepatrimoine.edit', {'id': typePatrimoines.id}) }}" class="btn btn-secondary">Modifier</a>
+                        <form method="post" action="{{ path('typepatrimoine.delete', {'id': typePatrimoines.id}) }}" style="display: inline-block">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                        </form>
+                    
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('typepatrimoine.create') }}" class="btn btn-success">Ajouter un type de patrimoine</a>
+</div>
+{% endblock %}

@@ -53,7 +53,7 @@ class AmortissementService {
             $amortissement->setNumCredit($credit);
             $amortissement->setNumEcheance($i);
             $amortissement->setDateEcheance($newdate);
-            $amortissement->setMontantAmortissement($mensualite);
+            $amortissement->setMontantAmortissement($capital);
             $amortissement->setMontantInteret($interet);
             
             $this->entityManager->persist($amortissement);

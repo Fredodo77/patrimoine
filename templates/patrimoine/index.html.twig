@@ -11,14 +11,7 @@
 <div class="example-wrapper">
     <h1>Bienvenue dans la gestion de votre patrimoine !</h1>
     {% set total = 0 %}
-    <select name="patrimoine" id="patrimoine">
-    {% for patrimoines in patrimoine %}
-        {% set total = total + patrimoines.montant %}
-        
-           <option value="{% set bien = patrimoines.typeBien %}">{{ patrimoines.typeBien }}</option>
-            
-    {% endfor %}
-    </select><br>
+ 
     Le montant total de votre patrimoine est de {{ total }} €<br>
     Voici votre patrimoine : <br>
 
@@ -27,7 +20,6 @@
             <tr>
                 <th scope="col">Nom</th>
                 <th scope="col">Détails</th>
-                <th scope="col">Type de bien</th>
                 <th scope="col">Date d'acquisition</th>
                 <th scope="col">Valeur</th>
             </tr>
@@ -38,7 +30,6 @@
                 <tr>
                     <td>{{ patrimoines.name }}</td>
                     <td>{{ patrimoines.details }}</td>
-                    <td>{{ patrimoines.typeBien }}</td>
                     <td>{{ patrimoines.dateAcquisition|date('d/m/Y') }}</td>
                     <td>{{ patrimoines.montant }} {% if patrimoines.montant>0 %} € {% endif %}</td>
                     <td>
