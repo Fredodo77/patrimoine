@@ -94,4 +94,8 @@ class Amortissement
 
         return $this;
     }
+    public function __toString(): string
+    {
+        return $this->num_credit->getId() . ' - ' . $this->num_echeance;
+    }
 }

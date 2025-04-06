@@ -4,12 +4,16 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper { margin: 1em auto; max-width: 1200px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
 <div class="example-wrapper">
     <h1>Voici le détail du crédit {{ credit.id }}</h1>
+
+    {% set capital = credit.montant|round(2,'common') %}<br>
+
+    Montant du crédit : {{ capital }} €<br>
 
     <table class="table">
         <thead>
@@ -18,26 +22,36 @@
                 <th scope="col">Date</th>
                 <th scope="col">Annuité</th>
                 <th scope="col">Intérêts</th>
-                <th scope="col">Capital</th>
                 <th scope="col">Capital restant dû</th>
+                <th scope="col">Modifier l'échéance</th>
+                <th scope="col">Supprimer l'échéance</th>
             </tr>
         </thead>
         <tbody>
             {% for amortissement in amortissements %}
                 <tr>
-                    <td>{{ amortissement.mois }}</td>
-                    <td>{{ amortissement.date|date('d/m/Y') }}</td>
-                    <td>{{ amortissement.mensualite|round(2,'common') }} €</td>
-                    <td>{{ amortissement.interet|round(2,'common') }} €</td>
-                    <td>{{ amortissement.capital|round(2,'common') }} €</td>
-                    <td>{{ amortissement.capitalRestant|round(2,'common') }} €</td>
+                    {% set capital = capital - amortissement.montantAmortissement|round(2,'common') %}
+                    <td>{{ amortissement.numEcheance }}</td>
+                    <td>{{ amortissement.dateEcheance|date('d/m/Y') }}</td>
+                    <td>{{ amortissement.montantAmortissement|round(2,'common') }} €</td>
+                    <td>{{ amortissement.montantInteret|round(2,'common') }} €</td>
+                    <td>{{ capital|round(2,'common') }} €</td>
+                    <td>
+                        <a href="{{ path('amortissement.edit', {id: amortissement.id}) }}">
+                            <button type="button" class="btn btn-primary">Modifier</button>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('amortissement.delete', {id: amortissement.id}) }}">
+                            <button type="button" class="btn btn-danger">Supprimer</button>
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
     <a href = "{{ path('credit.index') }}"> <button type="button" class="btn btn-secondary">Retour</button></a>
-    <a href = "{{ path('amortissement.create', {id: credit.id}) }}"><button type="submit" class="btn btn-success">Valider le plan d'amortissement</button></a>
-    <button type="submit" class="btn btn-warning">Modifier le plan d'amortissement</button>
-    <button type="button" class="btn btn-danger">Supprimer le plan d'amortissement</button>
+    <a href = "{{ path('amortissement.create', {id: credit.id}) }}"><button type="submit" class="btn btn-success">Ajouter une échéance</button></a>
+    <a href = "{{ path('credit.delete', {id: credit.id}) }}"><button type="button" class="btn btn-danger">Supprimer le plan d'amortissement</button></a>
 </div>
 {% endblock %}
